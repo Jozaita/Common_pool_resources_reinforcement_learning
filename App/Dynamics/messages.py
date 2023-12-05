@@ -67,8 +67,11 @@ def average_stimulus(actions,special_value):
     """
 
     if isinstance(special_value,int) or isinstance(special_value,float):
-        arr = actions - special_value
-        print(actions, arr/np.max(np.abs(arr)))
-        return arr/np.max(np.abs(arr))
-    else:
-        return NotImplemented
+        avg_contribution = np.average(actions)
+
+        if avg_contribution > special_value: 
+            return np.logical_and(actions<avg_contribution,actions>special_value).astype(int)
+        else:
+            return np.logical_and(actions>avg_contribution,actions<special_value).astype(int)
+
+
